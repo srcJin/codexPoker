@@ -83,8 +83,9 @@ fly secrets set OPENAI_API_KEY=<your key>
 fly deploy
 ```
 
-Change `app = "pokercursor"` in `fly.toml` or deploy with `fly deploy -a <app-name>`
-if that name is unavailable. See `docs/deployment.md` for details.
+This repo is configured for `app = "codexpoker"` in `fly.toml`. Change it or
+deploy with `fly deploy -a <app-name>` if that name is unavailable. See
+`docs/deployment.md` for details.
 The Fly health check uses `GET /healthz`.
 
 ## Next steps (hackathon)

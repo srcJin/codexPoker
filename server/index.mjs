@@ -25,6 +25,7 @@ const HOST = process.env.HOST ?? '127.0.0.1';
 const MODEL = process.env.OPENAI_MODEL ?? 'gpt-5-mini';
 const REASONING_EFFORT = process.env.OPENAI_REASONING_EFFORT ?? 'minimal';
 const DIST_DIR = join(process.cwd(), 'dist');
+const SERVICE_NAME = process.env.SERVICE_NAME ?? 'codexpoker';
 
 // In-game tasks need snappy turns; post-hand analysis can afford more thought.
 const TASK_EFFORT = {
@@ -60,7 +61,7 @@ function sendJson(res, status, body) {
 function sendHealth(res) {
   sendJson(res, 200, {
     ok: true,
-    service: 'pokercursor',
+    service: SERVICE_NAME,
     uptime: Math.round(process.uptime()),
   });
 }
