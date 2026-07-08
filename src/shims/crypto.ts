@@ -1,18 +1,19 @@
-import nodeCrypto from 'crypto-browserify';
-
-type CryptoWithRandomInt = typeof nodeCrypto & {
-  randomInt: (min: number, max: number) => number;
-};
-
-const crypto = nodeCrypto as CryptoWithRandomInt;
-
-if (typeof crypto.randomInt !== 'function') {
-  crypto.randomInt = (min: number, max: number) => {
-    const range = max - min;
-    if (range <= 0) return min;
-    const bytes = crypto.randomBytes(4);
-    return min + (bytes.readUInt32BE(0) % range);
-  };
+function randomBytes(size: number) {
+  const bytes = new Uint8Array(size);
+  globalThis.crypto.getRandomValues(bytes);
+  return bytes;
 }
 
-export default crypto;
+function randomInt(min: number, max: number) {
+  const range = max - min;
+  if (range <= 0) return min;
+
+  const bytes = randomBytes(4);
+  const value = new DataView(bytes.buffer).getUint32(0);
+  return min + (value % range);
+}
+
+export default {
+  randomBytes,
+  randomInt,
+};

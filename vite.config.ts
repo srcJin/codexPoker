@@ -4,10 +4,10 @@ import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
 import { defineConfig } from 'vite';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const cryptoShim = path.resolve(rootDir, 'src/shims/crypto.ts');
+const assertShim = path.resolve(rootDir, 'src/shims/assert.ts');
 
 /** poker-ts uses Node crypto.randomInt — patch for browser hackathon build. */
 function pokerTsBrowserFix(): Plugin {
@@ -35,15 +35,10 @@ export default defineConfig({
   plugins: [
     react(),
     pokerTsBrowserFix(),
-    nodePolyfills({
-      include: ['assert'],
-      overrides: {
-        crypto: cryptoShim,
-      },
-    }),
   ],
   resolve: {
     alias: {
+      assert: assertShim,
       crypto: cryptoShim,
     },
   },
@@ -52,6 +47,7 @@ export default defineConfig({
     rolldownOptions: {
       resolve: {
         alias: {
+          assert: assertShim,
           crypto: cryptoShim,
         },
       },
