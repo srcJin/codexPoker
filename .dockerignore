@@ -1,0 +1,8 @@
+.env
+.git
+.playwright-mcp
+dist
+docs/issues
+node_modules
+npm-debug.log
+*.local
